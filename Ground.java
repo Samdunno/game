@@ -51,6 +51,16 @@ public class Ground implements GameObject {
 
         return color;
     }
-   
+    @Override
+    public void setX(float x) {
+        // TODO Auto-generated method stub
+        
+    }
+    @Override
+    public void setY(float y) {
+        // TODO Auto-generated method stub
+        
+    }
+
     
 }

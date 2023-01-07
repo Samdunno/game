@@ -1,6 +1,6 @@
 import java.awt.Color;
 
-public class Player implements Movable, GameObject{
+public class Player implements Movable {
     float x, y, xVel, yVel;
     int width, height;
     GameShape shape;
@@ -53,12 +53,31 @@ public class Player implements Movable, GameObject{
     @Override
     public float getX() {
         // TODO Auto-generated method stub
-        return x;
+        return this.x;
     }
     @Override
     public float getY() {
         // TODO Auto-generated method stub
-        return y;
+        return this.y;
+    }
+    @Override
+    public void setXVel(float xVel) {
+        this.xVel = xVel;
+        
+    }
+    @Override
+    public void setYVel(float yVel) {
+        this.yVel = yVel;
+    }
+    @Override
+    public void setX(float x) {
+        this.x = x;
+        
+    }
+    @Override
+    public void setY(float y) {
+        this.y = y;
+        
     }
 
 }

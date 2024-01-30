@@ -16,7 +16,7 @@ public class GameObject {
      * @param y      the y-coordinate of the object's position
      * @param width  the width of the object
      * @param height the height of the object
-     * @param shape  the shape of the object (e.g., rectangle, ellipse)
+     * @param shape  the shape of the object
      * @param color  the color of the object
      */
     public GameObject(float x, float y, int width, int height, GameShape shape, Color color) {

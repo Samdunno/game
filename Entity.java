@@ -15,7 +15,7 @@ public class Entity extends GameObject implements Movable {
      * @param y      the y-coordinate of the entity's position
      * @param width  the width of the entity
      * @param height the height of the entity
-     * @param shape  the shape of the entity (e.g., rectangle, ellipse)
+     * @param shape  the shape of the entity
      * @param color  the color of the entity
      */
     public Entity(float x, float y, int width, int height, GameShape shape, Color color) {

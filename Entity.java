@@ -1,101 +1,75 @@
 import java.awt.Color;
-import java.awt.Graphics;
-import java.util.ArrayList;
 
-public class Entity implements Movable, GameObject, Rigid {
-    float x, y, xVel, yVel;
-    int width, height;
-    GameShape shape;
-    Color color;
+/**
+ * The {@code Entity} class represents a movable game object with velocity, capable of responding to gravity.
+ * It inherits from {@code GameObject} class and implements the {@code Movable} interface.
+ */
+public class Entity extends GameObject implements Movable {
+    float xVel, yVel;
     private boolean onGround;
+
+    /**
+     * Constructs an {@code Entity} object with the specified position, dimensions, shape, and color.
+     *
+     * @param x      the x-coordinate of the entity's position
+     * @param y      the y-coordinate of the entity's position
+     * @param width  the width of the entity
+     * @param height the height of the entity
+     * @param shape  the shape of the entity (e.g., rectangle, ellipse)
+     * @param color  the color of the entity
+     */
     public Entity(float x, float y, int width, int height, GameShape shape, Color color) {
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-        this.shape = shape;
-        this.color = color;
+        super(x, y, width, height, shape, color);
     }
 
+    /**
+     * Sets the on-ground status of the entity.
+     *
+     * @param onGround {@code true} if the entity is on the ground, {@code false} otherwise
+     */
+    public void setOnGround(boolean onGround) {
+        this.onGround = onGround;
+    }
+
+    /**
+     * Applies gravity to the entity. If the entity is on the ground, the vertical velocity is set to 0.
+     * Otherwise, the vertical velocity is increased by the gravitational constant.
+     */
     @Override
     public void doGravity() {
-        if(! onGround)
-        yVel += Movable.GRAVITY;
-        
+        if (onGround) {
+            yVel = 0;
+        } else {
+            yVel += Movable.GRAVITY;
+        }
     }
 
+    /**
+     * Gets the horizontal velocity of the entity.
+     *
+     * @return the horizontal velocity of the entity
+     */
     @Override
     public float getXVel() {
         return xVel;
     }
 
+    /**
+     * Gets the vertical velocity of the entity.
+     *
+     * @return the vertical velocity of the entity
+     */
     @Override
     public float getYVel() {
         return yVel;
     }
 
+    /**
+     * Moves the entity based on its velocity.
+     */
     @Override
     public void move() {
-        x+= xVel;
-        y+= yVel; 
+        super.x += xVel;
+        super.y += yVel;
     }
-
-    @Override
-    public Color getColor() {
-        return color;
-    }
-
-    @Override
-    public int getHeight() {
-        return height;
-    }
-
-    @Override
-    public GameShape getShape() {
-        return shape;
-    }
-
-    @Override
-    public int getWidth() {
-        return width;
-    }
-
-    @Override
-    public float getX() {
-        return x;
-    }
-
-    @Override
-    public float getY() {
-        return y;
-    }
-
-    @Override
-    public void paintSelf(Graphics g) {
-        g.setColor(color);
-        if(shape == GameShape.OVAL) {
-            g.fillOval((int)x, (int)y, width, height);
-        } else if(shape == GameShape.RECTANGLE) {
-            g.fillRect((int)x, (int)y, width, height);
-        } else {
-            System.out.println("ERROR");
-        }
-        
-    }
-
-    @Override
-    public ArrayList<GameObject> getCollisions(ArrayList<GameObject> gameObjects) {
-        ArrayList<GameObject> collisions = new ArrayList<>();
-        boolean xColide,yColide;
-        for (GameObject obj : gameObjects) {
-            xColide = (this.x < obj.getX() - obj.getWidth() && this.x - this.width > obj.getX());
-            yColide = (this.y < obj.getY() - obj.getHeight() && this.y - this.height > obj.getY());
-            if(xColide && yColide) {
-                collisions.add(obj);
-            }
-        }
-        return collisions;
-        //
-    }
-    
 }

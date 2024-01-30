@@ -3,4 +3,5 @@ public interface Movable {
     public void move();
     public float getXVel();
     public float getYVel();
+    public void doGravity();
 }

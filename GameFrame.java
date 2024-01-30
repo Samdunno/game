@@ -10,5 +10,6 @@ public class GameFrame
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
+        panel.update();
     }
 }

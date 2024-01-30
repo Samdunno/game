@@ -15,6 +15,10 @@ public class Ground implements GameObject {
         this.color = c;
         shape = GameShape.RECTANGLE;
     }
+    public void paintSelf(Graphics g)
+    {
+        g.fillRect((int)this.x, (int)this.y, width, height);
+    }
     @Override
     public int getHeight() {
         // TODO Auto-generated method stub

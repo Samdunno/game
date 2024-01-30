@@ -7,5 +7,6 @@ public interface GameObject{
     public int getHeight();
     public GameShape getShape();
     public Color getColor();
+    public void paintSelf(Graphics g);
 
 }

@@ -5,7 +5,7 @@ import java.awt.Color;
  * It inherits from {@code GameObject} class and implements the {@code Movable} interface.
  */
 public class Entity extends GameObject implements Movable {
-    float xVel, yVel;
+    private float xVel, yVel;
     private boolean onGround;
 
     /**
@@ -71,5 +71,11 @@ public class Entity extends GameObject implements Movable {
     public void move() {
         super.x += xVel;
         super.y += yVel;
+    }
+    protected void setXVel(int v) {
+        this.xVel = v;
+    }
+    protected void setYVel(int v) {
+        this.yVel = v;
     }
 }

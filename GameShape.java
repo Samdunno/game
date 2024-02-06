@@ -6,7 +6,6 @@ public enum GameShape {
     /**Represents a rectangle.*/
     RECTANGLE,
 
-    /**
-     * Represents an image.*/
+    /**Represents an image.*/
     IMAGE
 }

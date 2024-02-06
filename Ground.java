@@ -1,10 +1,10 @@
 import java.awt.*;
 
 /**
- * The {@code Ground} class represents a game object that serves as the ground in a game.
- * It inherits from {@code GameObject}.
+ * The {@code Ground} class represents the ground of the game.
+ * It inherits from {@code StaticEntity}.
  */
-public class Ground extends GameObject {
+public class Ground extends StaticEntity {
 
     /**
      * Constructs a {@code Ground} object with the specified position, dimensions, shape, and color.

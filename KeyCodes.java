@@ -1,6 +1,8 @@
 import java.util.HashMap;
 import java.util.Map;
-
+/**The class {@code KeyCodes}, contains all of the KeyCodes with their 
+ * respective keys.
+ */
 public class KeyCodes {
     
         private Map<Integer, String> keyMap = new HashMap<>();
@@ -136,8 +138,13 @@ public class KeyCodes {
             keyMap.put(523, "UNDERSCORE");
             keyMap.put(524, "WINDOWS");
         }
-        public String getKey(int i) {
-            return keyMap.get(i);
+        /**
+         * Given a keycode, will return a String of the key that corresponds.
+         * @param keyCode
+         * @return String of the Key
+         */
+        public String getKey(int keyCode) {
+            return keyMap.get(keyCode);
         }
 
 }

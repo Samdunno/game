@@ -10,7 +10,8 @@ public class GamePanel extends JPanel{
     Player player;
     Ground ground;
     Controller c;
-   
+    Camera cam;
+
 
     public GamePanel()
     {
@@ -19,7 +20,8 @@ public class GamePanel extends JPanel{
         c = new Controller();
         player = new Player(500f, 100f);
         ground = new Ground(0, HEIGHT-50, 800, 50, GameShape.RECTANGLE, new Color(65, 250, 100));
-      
+        cam = new Camera(player);
+
         //Adds all controls for when key is pressed down.
         Function moveLeft = () -> {player.moveLeft(); };
         c.addControlDown(65, moveLeft);
@@ -68,6 +70,10 @@ public class GamePanel extends JPanel{
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
+        
+        // g.translate(12, 12);
+        g.translate((int) -cam.getX() + WIDTH /2 - player.getWidth() /2, (int) -cam.getY() + HEIGHT /2 - player.getHeight() /2);
+
         for(GameObject go: go)
         {
             go.paintSelf(g);

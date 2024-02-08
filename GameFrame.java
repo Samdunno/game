@@ -8,11 +8,11 @@ public class GameFrame
         frame.add(panel);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
+        frame.setResizable(false);
 
         frame.pack();
         frame.setVisible(true);
-        // frame.setResizable(false);
+        
         panel.update();
     }
 }

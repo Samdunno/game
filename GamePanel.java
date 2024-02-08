@@ -11,8 +11,7 @@ public class GamePanel extends JPanel{
     Ground ground;
     Controller c;
     Camera cam;
-
-
+    
     public GamePanel()
     {
         this.setFocusable(true);
@@ -20,7 +19,11 @@ public class GamePanel extends JPanel{
         c = new Controller();
         player = new Player(500f, 100f);
         ground = new Ground(0, HEIGHT-50, 800, 50, GameShape.RECTANGLE, new Color(65, 250, 100));
-        cam = new Camera(player);
+
+        //camera buffer 30% of screen size
+        var camBuffer = new Rectangle(0, 0, (int)(WIDTH * .3), (int)(HEIGHT * .3));
+
+        cam = new Camera(player, this, camBuffer);
 
         //Adds all controls for when key is pressed down.
         Function moveLeft = () -> {player.moveLeft(); };
@@ -72,8 +75,9 @@ public class GamePanel extends JPanel{
         super.paintComponent(g);
         
         // g.translate(12, 12);
-        g.translate((int) -cam.getX() + WIDTH /2 - player.getWidth() /2, (int) -cam.getY() + HEIGHT /2 - player.getHeight() /2);
-
+        // g.translate((int) -cam.getX() + WIDTH /2 - player.getWidth() /2, (int) -cam.getY() + HEIGHT /2 - player.getHeight() /2);
+        cam.TranslateCamera(g);
+        
         for(GameObject go: go)
         {
             go.paintSelf(g);
@@ -81,4 +85,12 @@ public class GamePanel extends JPanel{
         }
     }
     
+    public int getHeight() {
+        return HEIGHT;
+    }
+
+    public int getWidth() {
+        return WIDTH;
+    }
+
 }

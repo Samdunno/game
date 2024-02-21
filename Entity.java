@@ -30,6 +30,16 @@ public class Entity extends GameObject implements Movable {
     public void setOnGround(boolean onGround) {
         this.onGround = onGround;
     }
+    public boolean onGround() {
+        return onGround;
+    }
+    public void correctPosition(GameObject obj) {
+        boolean xCollision = (this.x < obj.getX() + obj.getWidth() && this.x + super.getWidth() > obj.getX());
+        if(xCollision && yVel > 0)
+            this.y = ((int)obj.getY() - this.getHeight()+1);
+        //Is in side bounds
+        //yVel is negative
+    }
 
     /**
      * Applies gravity to the entity. If the entity is on the ground, the vertical velocity is set to 0.
@@ -37,6 +47,7 @@ public class Entity extends GameObject implements Movable {
      */
     @Override
     public void doGravity() {
+        
         if (onGround) {
             yVel = 0;
         } else {

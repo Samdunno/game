@@ -11,6 +11,7 @@ public class GamePanel extends JPanel{
     Ground ground;
     Controller c;
     Camera cam;
+    Enemy e;
     
     public GamePanel()
     {
@@ -18,7 +19,8 @@ public class GamePanel extends JPanel{
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         c = new Controller();
         player = new Player(500f, 100f);
-        ground = new Ground(0, HEIGHT-50, 800, 50, GameShape.RECTANGLE, new Color(65, 250, 100));
+        e = new Enemy(1100, 100, player);
+        ground = new Ground(0, HEIGHT-50, 2000, 50, GameShape.RECTANGLE, new Color(65, 250, 100));
 
         //camera buffer 30% of screen size
         var camBuffer = new Rectangle(0, 0, (int)(WIDTH * .3), (int)(HEIGHT * .3));
@@ -42,7 +44,9 @@ public class GamePanel extends JPanel{
         //Adding the objects to respective arrays.
         go.add(ground);
         go.add(player);
+        go.add(e);
         movers.add(player);
+        movers.add(e);
         this.addKeyListener(c);
         
     }
@@ -53,11 +57,19 @@ public class GamePanel extends JPanel{
         {
             if(player.isColliding(ground) && player.getYVel() >= 0) {
                 player.setOnGround(true);
+                player.correctPosition(ground);
             } else {
                 player.setOnGround(false);
             }
+            if(e.isColliding(ground) && e.getYVel() >= 0) {
+                e.setOnGround(true);
+                e.correctPosition(ground);
+            } else {
+                e.setOnGround(false);
+            }
             m.doGravity();
             m.move();
+
         }
 
         repaint();

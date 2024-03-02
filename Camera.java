@@ -8,6 +8,9 @@ public class Camera {
     GamePanel panel;
     Rectangle lastFrameClip;
     Rectangle cameraBuffer;
+    int bufferAreaWidth;
+    int bufferAreaHeight;
+
 
     public Camera(Player player, GamePanel panel, Rectangle cameraBuffer) 
     {
@@ -42,11 +45,14 @@ public class Camera {
         if (player.getX() + player.getWidth() > cameraBuffer.getX() + cameraBuffer.getWidth()) {
             //move cam right
             // moveX = (int) (cameraBuffer.getX() + cameraBuffer.getWidth() - (player.getX() + player.getWidth()));
-            moveX = (int) (player.getX() + player.getWidth() - (cameraBuffer.getX() + cameraBuffer.getWidth()));
+            moveX = (int)((player.getX() + player.getWidth() - (cameraBuffer.getX() + cameraBuffer.getWidth())) / 10.0);
+
+            
 
         } else if (player.getX() < cameraBuffer.getX() ) {
-            moveX = (int) ( player.getX() - cameraBuffer.getX() );
+            moveX = (int) (( player.getX() - cameraBuffer.getX() ) / 10.0);
 
+            
         }
 
         if (player.getY() + player.getHeight() > cameraBuffer.getY() + cameraBuffer.getHeight()) {

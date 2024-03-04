@@ -8,6 +8,7 @@ public class GameObject {
     private int width, height;
     private GameShape shape;
     private Color color;
+    private Image image;
 
     /**
      * Constructs a {@code GameObject} with the specified position, dimensions, shape, and color.
@@ -26,6 +27,20 @@ public class GameObject {
         this.height = height;
         this.shape = shape;
         this.color = color;
+    }
+    public GameObject(float x, float y, int width, int height, GameShape shape, Image im) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.shape = shape;
+        this.image = im;
+    }
+    protected Image getImage() {
+        return image;
+    }
+    protected void setImage(Image im) {
+        this.image = im;
     }
 
     /**
@@ -93,8 +108,10 @@ public class GameObject {
             g.fillOval((int) x, (int) y, width, height);
         } else if (this.shape == GameShape.RECTANGLE) {
             g.fillRect((int) x, (int) y, width, height);
+        } else if (this.shape == GameShape.IMAGE) {
+            g.drawImage(this.image, (int) x, (int) y, null);
         } else {
-            System.out.println("ERROR");
+            
         }
     }
 

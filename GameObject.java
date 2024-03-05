@@ -126,4 +126,29 @@ public class GameObject {
         boolean yCollision = (this.y < obj.getY() + obj.getHeight() && this.y + this.height > obj.getY());
         return xCollision && yCollision;
     }
+    
+    public String collisionDirection(GameObject obj) {
+        if(!isColliding(obj)){
+            return "";
+        }
+        //top higher, bottom lower than other top
+        if(this.y > obj.getY() && this.y + this.height < obj.getY() ) {
+            return "top";
+
+        }
+        //top higher, bottom lower than other bottom
+        if(this.y < obj.getY() && this.y + this.getHeight() < obj.getY()){
+            return "bottom";
+        }
+        //left less then obj left, right equal to or more than obj left
+        if(this.x < obj.getX() && this.x + this.width >= obj.getX() ){
+        return "left";
+        
+        }
+        //right more then obj right, left less than or equal
+        if(this.x <= obj.getX() + obj.getWidth() && this.x + this.width > obj.getWidth() + obj.getX()){
+        return "right";
+        }
+        return "";
+    }
 }

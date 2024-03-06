@@ -8,6 +8,7 @@ public class GameObject {
     private int width, height;
     private GameShape shape;
     private Color color;
+    private Image image;
 
     /**
      * Constructs a {@code GameObject} with the specified position, dimensions, shape, and color.
@@ -26,6 +27,20 @@ public class GameObject {
         this.height = height;
         this.shape = shape;
         this.color = color;
+    }
+    public GameObject(float x, float y, int width, int height, GameShape shape, Image im) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.shape = shape;
+        this.image = im;
+    }
+    protected Image getImage() {
+        return image;
+    }
+    protected void setImage(Image im) {
+        this.image = im;
     }
 
     /**
@@ -93,8 +108,10 @@ public class GameObject {
             g.fillOval((int) x, (int) y, width, height);
         } else if (this.shape == GameShape.RECTANGLE) {
             g.fillRect((int) x, (int) y, width, height);
+        } else if (this.shape == GameShape.IMAGE) {
+            g.drawImage(this.image, (int) x, (int) y, null);
         } else {
-            System.out.println("ERROR");
+            
         }
     }
 
@@ -108,5 +125,30 @@ public class GameObject {
         boolean xCollision = (this.x < obj.getX() + obj.getWidth() && this.x + this.width > obj.getX());
         boolean yCollision = (this.y < obj.getY() + obj.getHeight() && this.y + this.height > obj.getY());
         return xCollision && yCollision;
+    }
+    
+    public String collisionDirection(GameObject obj) {
+        if(!isColliding(obj)){
+            return "";
+        }
+        //top higher, bottom lower than other top
+        if(this.y > obj.getY() && this.y + this.height < obj.getY() ) {
+            return "top";
+
+        }
+        //top higher, bottom lower than other bottom
+        if(this.y < obj.getY() && this.y + this.getHeight() < obj.getY()){
+            return "bottom";
+        }
+        //left less then obj left, right equal to or more than obj left
+        if(this.x < obj.getX() && this.x + this.width >= obj.getX() ){
+        return "left";
+        
+        }
+        //right more then obj right, left less than or equal
+        if(this.x <= obj.getX() + obj.getWidth() && this.x + this.width > obj.getWidth() + obj.getX()){
+        return "right";
+        }
+        return "";
     }
 }

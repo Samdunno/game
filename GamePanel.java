@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.util.ArrayList;
 import java.awt.*;
+import java.awt.image.ImageObserver;
 
 public class GamePanel extends JPanel{
     private final int WIDTH = 800;
@@ -95,6 +96,7 @@ public class GamePanel extends JPanel{
             go.paintSelf(g);
             
         }
+        g.drawRect((int)player.getX(), (int)player.getY(), player.getWidth(), player.getHeight());
     }
     
     public int getHeight() {

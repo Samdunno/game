@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.xml.stream.events.EndElement;
+
 import java.util.ArrayList;
 import java.awt.*;
 import java.awt.image.ImageObserver;
@@ -7,7 +9,7 @@ public class GamePanel extends JPanel{
     private final int WIDTH = 800;
     private final int HEIGHT = 600;
     ArrayList<GameObject> go = new ArrayList<GameObject>();
-    ArrayList<Movable> movers = new ArrayList<Movable>();
+    ArrayList<Entity> movers = new ArrayList<Entity>();
     Player player;
     Ground ground;
     Controller c;
@@ -20,8 +22,13 @@ public class GamePanel extends JPanel{
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         c = new Controller();
         player = new Player(500f, 100f);
-        e = new Enemy(1100, 100, player);
-        ground = new Ground(0, HEIGHT-50, 2000, 50, GameShape.RECTANGLE, new Color(65, 250, 100));
+        for(int i = 0; i < 1; i++) {
+            Enemy e = new Enemy(-1000 + 20 * i, 100, player);
+            go.add(e);
+            movers.add(e);
+        }
+        
+        ground = new Ground(-5000, HEIGHT-50, 10000, 50, GameShape.RECTANGLE, new Color(65, 250, 100));
 
         //camera buffer 30% of screen size
         var camBuffer = new Rectangle(0, 0, (int)(WIDTH * .3), (int)(HEIGHT * .3));
@@ -35,6 +42,8 @@ public class GamePanel extends JPanel{
         c.addControlDown(68, moveRight);
         Function jump = () -> player.jump();
         c.addControlDown(32, jump);
+        Function attack = () -> go.add(player.attack());
+        c.addControlDown(75, attack);
 
         //Adds all controls for when key is released.
         Function stopRight = () -> player.stopRight();
@@ -45,29 +54,22 @@ public class GamePanel extends JPanel{
         //Adding the objects to respective arrays.
         go.add(ground);
         go.add(player);
-        go.add(e);
         movers.add(player);
-        movers.add(e);
         this.addKeyListener(c);
         
     }
     public void update()
     {
         while(true){
-        for(Movable m: movers)
+        for(Entity m: movers)
         {
-            if(player.isColliding(ground) && player.getYVel() >= 0) {
-                player.setOnGround(true);
-                player.correctPosition(ground);
+            if(m.isColliding(ground) && m.getYVel() >= 0) {
+                m.setOnGround(true);
+                m.correctPosition(ground);
             } else {
-                player.setOnGround(false);
+                m.setOnGround(false);
             }
-            if(e.isColliding(ground) && e.getYVel() >= 0) {
-                e.setOnGround(true);
-                e.correctPosition(ground);
-            } else {
-                e.setOnGround(false);
-            }
+            
             m.doGravity();
             m.move();
 

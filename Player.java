@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
  */
 public class Player extends Entity {
     private boolean faceingRight;
+    private String playerState;
     /**
      * Constructs a {@code Player} object with the specified initial position.
      *
@@ -21,6 +22,7 @@ public class Player extends Entity {
         this.faceingRight = true;
     }
     public void moveLeft() {
+        this.playerState = "walking";
         if(faceingRight){
             this.setImage(flip(this.getImage()));
             faceingRight = false;
@@ -28,6 +30,7 @@ public class Player extends Entity {
         super.setXVel(-3);
     }
     public void moveRight() {
+        this.playerState = "walking";
         if(!faceingRight){
             this.setImage(flip(this.getImage()));
             faceingRight = true;
@@ -35,15 +38,18 @@ public class Player extends Entity {
         super.setXVel(3);
     }
     public void jump() {
+        this.playerState = "jump";
         this.setOnGround(false);
         this.setYVel(-10);
     }
     public void stopRight() {
+        this.playerState = "idle";
         if(this.getXVel() > 0) {
             super.setXVel(0);
         }
     }
     public void stopLeft() {
+        this.playerState = "idle";
         if(this.getXVel() < 0) {
             super.setXVel(0);
         }
@@ -53,6 +59,10 @@ public class Player extends Entity {
         tx.translate(-im.getWidth(null), 0);
         AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
         return(op.filter((BufferedImage)im, null));
-
+    }
+    public GameObject attack() {
+        this.playerState = "attack";
+        GameObject attackSpace = new GameObject(this.x, this.y, 10, 10, GameShape.OVAL, Color.gray);
+        return attackSpace;
     }
 }

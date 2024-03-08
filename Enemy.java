@@ -1,4 +1,10 @@
 import java.awt.Color;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 /**Class for {@code Enemy} */
 public class Enemy extends Entity{
@@ -12,7 +18,7 @@ public class Enemy extends Entity{
      * @param p, to attack
      */
      public Enemy(float x, float y, Player p) {
-        super(x, y, 100, 100, GameShape.RECTANGLE, Color.red);
+        super(x, y, 64, 64, GameShape.IMAGE, FileUtil.loadImage("CryoClaw.png"));
         player = p;
         leapAttack = new Cooldown(5);
      }

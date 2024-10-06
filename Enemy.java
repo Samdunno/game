@@ -26,15 +26,17 @@ public class Enemy extends Entity{
      public void move() {
         super.move();
         int dis = (int)this.getX() - (int)player.getX();
-        if(dis > 400) {
+        if(dis > 10 && Math.abs(dis) > 10) {
             this.setXVel(-2);
-        } else if(dis < -400) {
+        } else if(dis < -10 && Math.abs(dis) > 10) {
             this.setXVel(2);    
-        } else if(dis <-1) {
+        } else if(dis <-1 && Math.abs(dis) <= 500) {
             attack(true);
-        } else if(dis >1) {
+        } else if(dis >1 && Math.abs(dis) <= 500) {
             attack(false);
-        } else {
+        } else if(Math.abs(dis) <= 10) {
+            this.setXVel(0);
+        }else {
             System.out.println(player.getX() - 210);
             System.out.println(this.getX());
         }

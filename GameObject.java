@@ -3,7 +3,7 @@ import java.awt.*;
 /**
  * The {@code GameObject} class represents a generic game object with position, dimensions, shape, and color.
  */
-public class GameObject {
+public class GameObject implements Collider {
     protected float x, y;
     private int width, height;
     private GameShape shape;
@@ -48,8 +48,8 @@ public class GameObject {
      *
      * @return the x-coordinate of the object's position
      */
-    public float getX() {
-        return x;
+    public int getX() {
+        return (int)x;
     }
 
     /**
@@ -57,8 +57,8 @@ public class GameObject {
      *
      * @return the y-coordinate of the object's position
      */
-    public float getY() {
-        return y;
+    public int getY() {
+        return (int)y;
     }
 
     /**
@@ -121,9 +121,10 @@ public class GameObject {
      * @param obj the other game object to check for collision
      * @return {@code true} if the objects are colliding, {@code false} otherwise
      */
-    public boolean isColliding(GameObject obj) {
-        boolean xCollision = (this.x < obj.getX() + obj.getWidth() && this.x + this.width > obj.getX());
-        boolean yCollision = (this.y < obj.getY() + obj.getHeight() && this.y + this.height > obj.getY());
+    @Override
+    public boolean isColliding(Collider c) {
+        boolean xCollision = (this.x < c.getX() + c.getWidth() && this.x + this.width > c.getX());
+        boolean yCollision = (this.y < c.getY() + c.getHeight() && this.y + this.height > c.getY());
         return xCollision && yCollision;
     }
     

@@ -1,17 +1,23 @@
 import java.awt.*;
+import java.util.Map;
 
 /**
- * The {@code GameObject} class represents a generic game object with position, dimensions, shape, and color.
+ * The {@code GameObject} class represents a generic game object with position,
+ * dimensions, shape, and color.
  */
+
 public class GameObject implements Collider {
     protected float x, y;
     private int width, height;
     private GameShape shape;
     private Color color;
     private Image image;
+    protected String playerState;
+    Sprites sprites;
 
     /**
-     * Constructs a {@code GameObject} with the specified position, dimensions, shape, and color.
+     * Constructs a {@code GameObject} with the specified position, dimensions,
+     * shape, and color.
      *
      * @param x      the x-coordinate of the object's position
      * @param y      the y-coordinate of the object's position
@@ -28,6 +34,7 @@ public class GameObject implements Collider {
         this.shape = shape;
         this.color = color;
     }
+
     public GameObject(float x, float y, int width, int height, GameShape shape, Image im) {
         this.x = x;
         this.y = y;
@@ -36,9 +43,21 @@ public class GameObject implements Collider {
         this.shape = shape;
         this.image = im;
     }
+
+    public GameObject(float x, float y, int width, int height, GameShape shape, Sprites sprites) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.shape = shape;
+        this.sprites = sprites;
+
+    }
+
     protected Image getImage() {
         return image;
     }
+
     protected void setImage(Image im) {
         this.image = im;
     }
@@ -49,7 +68,7 @@ public class GameObject implements Collider {
      * @return the x-coordinate of the object's position
      */
     public int getX() {
-        return (int)x;
+        return (int) x;
     }
 
     /**
@@ -58,7 +77,7 @@ public class GameObject implements Collider {
      * @return the y-coordinate of the object's position
      */
     public int getY() {
-        return (int)y;
+        return (int) y;
     }
 
     /**
@@ -109,9 +128,34 @@ public class GameObject implements Collider {
         } else if (this.shape == GameShape.RECTANGLE) {
             g.fillRect((int) x, (int) y, width, height);
         } else if (this.shape == GameShape.IMAGE) {
-            g.drawImage(this.image, (int) x, (int) y, null);
+            if (this.sprites == null)
+                g.drawImage(this.getImage(), (int) x, (int) y, null);
+            else {
+                //center image in frame
+                float drawX = x;
+                float drawY = y;
+
+                //check state
+                if (this.playerState != this.sprites.CurrentState) {
+                    this.sprites.SetState(playerState);
+                }
+
+                var img = this.sprites.GetCurrentSprite().GetImage();
+                var playw = (float)img.getWidth(null);
+                var playh = (float)img.getHeight(null);
+
+                if (playw > -1 & playh > -1) {
+                    //shift x to center in frame
+                    drawX = drawX - (playw - this.width) / 2;
+                    drawY = drawY - (playh - this.height) /2;
+                }
+                
+                System.out.println(String.format("Player x:%f to %f, y:%f to %f",x, drawX, y, drawY));
+
+                g.drawImage(img, (int) drawX, (int) drawY, null);
+            }
         } else {
-            
+
         }
     }
 
@@ -127,28 +171,28 @@ public class GameObject implements Collider {
         boolean yCollision = (this.y < c.getY() + c.getHeight() && this.y + this.height > c.getY());
         return xCollision && yCollision;
     }
-    
+
     public String collisionDirection(GameObject obj) {
-        if(!isColliding(obj)){
+        if (!isColliding(obj)) {
             return "";
         }
-        //top higher, bottom lower than other top
-        if(this.y > obj.getY() && this.y + this.height < obj.getY() ) {
+        // top higher, bottom lower than other top
+        if (this.y > obj.getY() && this.y + this.height < obj.getY()) {
             return "top";
 
         }
-        //top higher, bottom lower than other bottom
-        if(this.y < obj.getY() && this.y + this.getHeight() < obj.getY()){
+        // top higher, bottom lower than other bottom
+        if (this.y < obj.getY() && this.y + this.getHeight() < obj.getY()) {
             return "bottom";
         }
-        //left less then obj left, right equal to or more than obj left
-        if(this.x < obj.getX() && this.x + this.width >= obj.getX() ){
-        return "left";
-        
+        // left less then obj left, right equal to or more than obj left
+        if (this.x < obj.getX() && this.x + this.width >= obj.getX()) {
+            return "left";
+
         }
-        //right more then obj right, left less than or equal
-        if(this.x <= obj.getX() + obj.getWidth() && this.x + this.width > obj.getWidth() + obj.getX()){
-        return "right";
+        // right more then obj right, left less than or equal
+        if (this.x <= obj.getX() + obj.getWidth() && this.x + this.width > obj.getWidth() + obj.getX()) {
+            return "right";
         }
         return "";
     }

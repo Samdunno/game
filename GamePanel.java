@@ -21,7 +21,10 @@ public class GamePanel extends JPanel{
         this.setFocusable(true);
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         c = new Controller();
-        player = new Player(500f, 100f);
+
+
+        var playerSprites = FileUtil.SpriteLoader("character.png", new String[]{"idle", "idk", "jump", "attack", "walking", "damage", "dead", "attack2"}, 6, 100, "idle");
+        player = new Player(500f, 100f, playerSprites);
         for(int i = 0; i < 1; i++) {
             Enemy e = new Enemy(-1000 + 20 * i, 100, player);
             go.add(e);

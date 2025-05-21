@@ -3,6 +3,7 @@ import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
+import java.util.Map;
 
 /**
  * The {@code Player} class represents a player entity in a game.
@@ -10,16 +11,18 @@ import java.awt.image.BufferedImage;
  */
 public class Player extends Entity {
     private boolean faceingRight;
-    private String playerState;
+    
     /**
      * Constructs a {@code Player} object with the specified initial position.
      *
      * @param x the initial x-coordinate of the player's position
      * @param y the initial y-coordinate of the player's position
      */
-    public Player(float x, float y) {
-        super(x, y, 20, 36, GameShape.IMAGE, FileUtil.cell1());
+    public Player(float x, float y, Sprites sprites) {
+        super(x, y, 20, 36, GameShape.IMAGE, sprites);
         this.faceingRight = true;
+        this.playerState = "idle";
+
     }
     public void moveLeft() {
         this.playerState = "walking";

@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Image;
+import java.util.Map;
 
 /**
  * The {@code Entity} class represents a movable game object with velocity, capable of responding to gravity.
@@ -27,6 +28,9 @@ public class Entity extends GameObject implements Movable {
         super(x, y, width, height, shape, im);
     }
 
+    public Entity(float x, float y, int width, int height, GameShape shape, Sprites sprites) {
+        super(x, y, width, height, shape, sprites);
+    }
     /**
      * Sets the on-ground status of the entity.
      *

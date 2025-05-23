@@ -23,7 +23,7 @@ public class GamePanel extends JPanel{
         c = new Controller();
 
 
-        var playerSprites = FileUtil.SpriteLoader("character.png", new String[]{"idle", "idk", "jump", "attack", "walking", "damage", "dead", "attack2"}, 6, 100, "idle");
+        var playerSprites = FileUtil.SpriteLoader("character.png", new String[]{"run?", "idle", "jump", "attack", "walking", "damage", "dead", "attack2"}, 6, 100, "idle");
         player = new Player(500f, 100f, playerSprites);
         for(int i = 0; i < 1; i++) {
             Enemy e = new Enemy(-1000 + 20 * i, 100, player);

@@ -150,7 +150,7 @@ public class GameObject implements Collider {
                     drawY = drawY - (playh - this.height) /2;
                 }
                 
-                System.out.println(String.format("Player x:%f to %f, y:%f to %f",x, drawX, y, drawY));
+                //System.out.println(String.format("Player x:%f to %f, y:%f to %f",x, drawX, y, drawY));
 
                 g.drawImage(img, (int) drawX, (int) drawY, null);
             }

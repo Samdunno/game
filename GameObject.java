@@ -1,5 +1,7 @@
 import java.awt.*;
-import java.util.Map;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
 
 /**
  * The {@code GameObject} class represents a generic game object with position,
@@ -14,6 +16,7 @@ public class GameObject implements Collider {
     private Image image;
     protected String playerState;
     Sprites sprites;
+    protected boolean faceingRight;
 
     /**
      * Constructs a {@code GameObject} with the specified position, dimensions,
@@ -129,34 +132,68 @@ public class GameObject implements Collider {
             g.fillRect((int) x, (int) y, width, height);
         } else if (this.shape == GameShape.IMAGE) {
             if (this.sprites == null)
-                g.drawImage(this.getImage(), (int) x, (int) y, null);
+                g.drawImage(flip(this.getImage()), (int) x, (int) y, null);
             else {
-                //center image in frame
+                // center image in frame
                 float drawX = x;
                 float drawY = y;
 
-                //check state
+                // check state
                 if (this.playerState != this.sprites.CurrentState) {
                     this.sprites.SetState(playerState);
                 }
 
                 var img = this.sprites.GetCurrentSprite().GetImage();
-                var playw = (float)img.getWidth(null);
-                var playh = (float)img.getHeight(null);
+                var playw = (float) img.getWidth(null);
+                var playh = (float) img.getHeight(null);
 
                 if (playw > -1 & playh > -1) {
-                    //shift x to center in frame
+                    // shift x to center in frame
                     drawX = drawX - (playw - this.width) / 2;
-                    drawY = drawY - (playh - this.height) /2;
+                    drawY = drawY - (playh - this.height) / 2;
                 }
-                
-                System.out.println(String.format("Player x:%f to %f, y:%f to %f",x, drawX, y, drawY));
 
-                g.drawImage(img, (int) drawX, (int) drawY, null);
+                // System.out.println(String.format("Player x:%f to %f, y:%f to %f",x, drawX, y,
+                // drawY));
+
+                g.drawImage(flip(img), (int) drawX, (int) drawY, null);
             }
         } else {
 
         }
+    }
+
+    public Image flip(Image im) {
+        if (faceingRight)
+            return im;
+
+        AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
+        tx.translate(-im.getWidth(null), 0);
+        AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+        return (op.filter((BufferedImage) toBufferedImage(im), null));
+    }
+
+    /**
+     * Converts a given Image into a BufferedImage
+     *
+     * @param img The Image to be converted
+     * @return The converted BufferedImage
+     */
+    public static BufferedImage toBufferedImage(Image img) {
+        if (img instanceof BufferedImage) {
+            return (BufferedImage) img;
+        }
+
+        // Create a buffered image with transparency
+        BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+
+        // Draw the image on to the buffered image
+        Graphics2D bGr = bimage.createGraphics();
+        bGr.drawImage(img, 0, 0, null);
+        bGr.dispose();
+
+        // Return the buffered image
+        return bimage;
     }
 
     /**

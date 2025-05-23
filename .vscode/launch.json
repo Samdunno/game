@@ -8,8 +8,7 @@
             "type": "java",
             "name": "GameFrame",
             "request": "launch",
-            "mainClass": "GameFrame",
-            "projectName": "game_713068c6"
+            "mainClass": "GameFrame"
         }
     ]
 }
